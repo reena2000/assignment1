@@ -1,38 +1,42 @@
-﻿
-using System;
+﻿using System;
+using System.Text.RegularExpressions;
 
-class Program
+class ValidDateFinder
 {
     static void Main()
     {
-        Console.WriteLine("Enter the height of the triangle:");
-        if (int.TryParse(Console.ReadLine(), out int height))
+        string input = "Hdjsh as2323234jghsd hjsdg sdhk 12212021 idf32432 32423 d34234jh dfh";
+        string validDate = FindValidDate(input);
+
+        if (validDate != null)
         {
-            PrintTriangle(height);
+            Console.WriteLine("Valid date found: " + validDate);
         }
         else
         {
-            Console.WriteLine("Invalid input. Please enter a valid integer.");
+            Console.WriteLine("No valid date found in the input.");
         }
     }
 
-    static void PrintTriangle(int height)
+    private static string FindValidDate(string input)
     {
-        for (int i = 1; i <= height; i++)
+        // Define a regular expression for a date pattern (MMDDYYYY)
+        Regex regex = new Regex(@"\b(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])(19|20)\d\d\b");
+        Match match = regex.Match(input);
+
+        if (match.Success)
         {
-            // Print spaces before the stars
-            for (int j = 0; j < height - i; j++)
-            {
-                Console.Write(" ");
-            }
-
-            // Print stars
-            for (int k = 0; k < 2 * i - 1; k++)
-            {
-                Console.Write("*");
-            }
-
-            Console.WriteLine(); // Move to the next line after each row
+            return match.Value;
+        }
+        else
+        {
+            return null;
         }
     }
 }
+
+
+
+
+
+
